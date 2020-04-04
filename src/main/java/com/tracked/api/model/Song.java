@@ -17,10 +17,10 @@ import java.util.List;
 @Setter
 public class Song {
     @Id
-    private String song_id;
+    private String id;
 
     private String title;
 
-    @ManyToMany
-    private List<TracklistSong> tracklist_songs;
+    @OneToMany(mappedBy = "song")
+    private List<TracklistSong> tracklists;
 }

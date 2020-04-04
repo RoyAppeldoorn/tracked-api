@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Entity
@@ -14,10 +16,15 @@ import java.util.List;
 @Setter
 public class Tracklist {
     @Id
-    private String tracklist_id;
+    @NotNull
+    private String id;
 
+    @NotBlank
     private String title;
 
-    @ManyToMany
-    private List<TracklistSong> tracklist_songs;
+    @NotBlank
+    private String embed_url;
+
+    @OneToMany(mappedBy = "tracklist")
+    private List<TracklistSong> songs;
 }
