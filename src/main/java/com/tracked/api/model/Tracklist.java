@@ -17,12 +17,15 @@ import java.util.List;
 public class Tracklist {
     @Id
     @NotNull
+    @JsonProperty("id")
     private String id;
 
     @NotBlank
+    @JsonProperty("title")
     private String title;
 
     @NotBlank
+    @JsonProperty("embed_url")
     private String embed_url;
 
     @OneToMany(mappedBy = "tracklist")
