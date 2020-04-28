@@ -11,7 +11,7 @@ services:
 
 addons:
   sonarcloud:
-    organization: "royappeldoorn1122" # the key of the org you chose at step #
+    organization: "royappeldoorn1122"
 
 install:
   - "mvn -N io.takari:maven:wrapper -Dmaven=${MAVEN_VERSION}"
