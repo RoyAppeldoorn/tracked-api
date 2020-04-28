@@ -10,8 +10,4 @@ import org.springframework.test.context.TestPropertySource;
 @SpringBootTest
 class ApiApplicationTests {
 
-    @Test
-    void contextLoads() {
-    }
-
 }
