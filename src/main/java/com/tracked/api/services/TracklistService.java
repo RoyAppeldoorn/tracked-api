@@ -1,6 +1,6 @@
-package com.tracked.api.service;
+package com.tracked.api.services;
 
-import com.tracked.api.model.Tracklist;
+import com.tracked.api.models.Tracklist;
 import com.tracked.api.repositories.TracklistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

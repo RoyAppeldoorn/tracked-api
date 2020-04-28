@@ -1,7 +1,7 @@
-package com.tracked.api.controller;
+package com.tracked.api.controllers;
 
-import com.tracked.api.model.Tracklist;
-import com.tracked.api.service.TracklistService;
+import com.tracked.api.models.Tracklist;
+import com.tracked.api.services.TracklistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

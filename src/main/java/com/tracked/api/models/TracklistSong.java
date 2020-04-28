@@ -1,4 +1,4 @@
-package com.tracked.api.model;
+package com.tracked.api.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +13,6 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class TracklistSong {
-
     @Id
     private String id;
 
