@@ -1,11 +1,11 @@
-package com.tracked.api.model;
+package com.tracked.api.models;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
@@ -16,7 +16,8 @@ import java.util.List;
 @Setter
 public class Tracklist {
     @Id
-    @NotNull
+    @GeneratedValue(generator = "system-uuid")
+    @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @JsonProperty("id")
     private String id;
 
