@@ -17,7 +17,7 @@ install:
   - "mvn -N io.takari:maven:wrapper -Dmaven=${MAVEN_VERSION}"
 
 script:
-  - mvn clean install sonar:sonar -Pcoverage -Dsonar.projectKey=RoyAppeldoorn_tracked-api
+  - "mvn clean install sonar:sonar -Pcoverage -Dsonar.projectKey=RoyAppeldoorn_tracked-api"
   - docker build -t docker.io/$DOCKER_NAME/tracked-rest:latest .
 
 after_success:
