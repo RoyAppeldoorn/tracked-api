@@ -1,4 +1,4 @@
-//package com.tracked.api.model;
+//package com.tracked.api.domain.model;
 //
 //import lombok.*;
 //

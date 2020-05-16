@@ -1,4 +1,4 @@
-package com.tracked.api.models;
+package com.tracked.api.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

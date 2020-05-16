@@ -1,4 +1,4 @@
-package com.tracked.api.controllers;
+package com.tracked.api.controller;
 
 import com.tracked.api.utils.ApiError;
 import org.springframework.http.HttpHeaders;

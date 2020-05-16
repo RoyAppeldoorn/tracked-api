@@ -1,7 +1,7 @@
-package com.tracked.api.controllers;
+package com.tracked.api.controller;
 
-import com.tracked.api.models.Tracklist;
-import com.tracked.api.services.TracklistService;
+import com.tracked.api.model.Tracklist;
+import com.tracked.api.service.impl.TracklistServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,21 +12,21 @@ import javax.validation.Valid;
 @CrossOrigin
 public class TracklistController {
 
-    private final TracklistService tracklistService;
+    private final TracklistServiceImpl tracklistServiceImpl;
 
     @Autowired
-    public TracklistController(TracklistService tracklistService) {
-        this.tracklistService = tracklistService;
+    public TracklistController(TracklistServiceImpl tracklistServiceImpl) {
+        this.tracklistServiceImpl = tracklistServiceImpl;
     }
 
     @GetMapping(value = "/{id}")
     public Tracklist getTracklist(@Valid @PathVariable String id) {
-        return tracklistService.getTracklist(id);
+        return tracklistServiceImpl.get(id);
     }
 
     @PostMapping(value = "/create")
     public void createTracklist(@Valid @RequestBody Tracklist tracklist) {
-        tracklistService.createTracklist(tracklist);
+        tracklistServiceImpl.create(tracklist);
     }
 
 }

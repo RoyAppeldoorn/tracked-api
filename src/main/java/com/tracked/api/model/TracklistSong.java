@@ -1,4 +1,4 @@
-package com.tracked.api.models;
+package com.tracked.api.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
