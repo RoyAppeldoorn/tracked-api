@@ -6,7 +6,6 @@ import javax.persistence.*;
 
 @Entity(name = "ROLE")
 public class Role implements GrantedAuthority {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
