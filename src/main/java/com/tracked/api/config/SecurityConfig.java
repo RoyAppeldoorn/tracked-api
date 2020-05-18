@@ -1,48 +1,76 @@
 package com.tracked.api.config;
 
+import com.tracked.api.config.firebase.FirebaseAuthenticationEntryPoint;
 import com.tracked.api.config.firebase.FirebaseAuthenticationProvider;
-import com.tracked.api.config.firebase.FirebaseFilter;
-import com.tracked.api.service.FirebaseService;
+import com.tracked.api.config.firebase.FirebaseAuthenticationTokenFilter;
+import com.tracked.api.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.DefaultSecurityFilterChain;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import javax.servlet.http.HttpServletResponse;
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+@EnableWebMvc
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
-    private FirebaseAuthenticationProvider firebaseProvider;
-    private FirebaseService firebaseService;
+    private final FirebaseAuthenticationProvider authenticationProvider;
 
-    public SecurityConfig(FirebaseAuthenticationProvider firebaseProvider, FirebaseService firebaseService) {
-        this.firebaseProvider = firebaseProvider;
-        this.firebaseService = firebaseService;
+    @Autowired
+    public SecurityConfig(FirebaseAuthenticationProvider authenticationProvider) {
+        this.authenticationProvider = authenticationProvider;
+    }
+
+    @Autowired
+    @Qualifier(value = UserServiceImpl.NAME)
+    private UserDetailsService userService;
+
+    @Override
+    public void configure(AuthenticationManagerBuilder auth)
+            throws Exception {
+        auth.userDetailsService(userService);
+        auth.authenticationProvider(authenticationProvider);
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(firebaseProvider);
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .authorizeRequests()
+                .anyRequest().authenticated()
+                .and()
+                .cors()
+                .and()
+                .csrf().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .exceptionHandling().authenticationEntryPoint(new FirebaseAuthenticationEntryPoint());
+
+        httpSecurity.addFilterBefore(tokenFilter(), BasicAuthenticationFilter.class);
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
-            .authorizeRequests()
-            .antMatchers("/auth/**").permitAll()
-            .anyRequest().authenticated()
-            .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
-        http.addFilterBefore(tokenAuthorizationFilter(), BasicAuthenticationFilter.class);
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedOrigins("*").allowedHeaders("*").allowedMethods("*");
     }
 
-    private FirebaseFilter tokenAuthorizationFilter() {
-        return new FirebaseFilter(firebaseService);
+    private FirebaseAuthenticationTokenFilter tokenFilter() {
+        return new FirebaseAuthenticationTokenFilter();
     }
+
 }
