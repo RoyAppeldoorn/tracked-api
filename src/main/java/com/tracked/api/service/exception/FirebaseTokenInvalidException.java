@@ -8,6 +8,4 @@ public class FirebaseTokenInvalidException extends BadCredentialsException {
         super(msg);
     }
 
-    private static final long serialVersionUID = 789949671713648425L;
-
 }

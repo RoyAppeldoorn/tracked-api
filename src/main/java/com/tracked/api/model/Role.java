@@ -7,8 +7,6 @@ import javax.persistence.*;
 @Entity(name = "ROLE")
 public class Role implements GrantedAuthority {
 
-    private static final long serialVersionUID = -8186644851823152209L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

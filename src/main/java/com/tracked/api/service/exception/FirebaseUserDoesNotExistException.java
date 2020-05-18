@@ -8,5 +8,4 @@ public class FirebaseUserDoesNotExistException extends AuthenticationCredentials
         super("User not found");
     }
 
-    private static final long serialVersionUID = 789949671713648425L;
 }

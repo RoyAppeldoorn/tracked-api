@@ -17,8 +17,6 @@ import java.io.IOException;
 @Log4j2
 public class FirebaseFilter extends OncePerRequestFilter {
 
-    private static String HEADER_NAME = "X-Authorization-Firebase";
-
     private final FirebaseService firebaseService;
 
     public FirebaseFilter(FirebaseService firebaseService) {
@@ -27,24 +25,24 @@ public class FirebaseFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String xAuth = request.getHeader(HEADER_NAME);
-        if (xAuth.isBlank()) {
-            filterChain.doFilter(request, response);
-            log.info("No header with name " + HEADER_NAME + " given");
-        } else {
+        final String authorizationHeader = request.getHeader("X-Authorization-Firebase");
+        String username = null;
+        FirebaseTokenHolder holder = null;
+
+        if (authorizationHeader != null) {
             try {
-                log.info("Header with name " + HEADER_NAME + " given");
-                FirebaseTokenHolder holder = firebaseService.parseToken(xAuth);
-
-                String userName = holder.getUid();
-
-                Authentication auth = new FirebaseAuthenticationToken(userName, holder);
-                SecurityContextHolder.getContext().setAuthentication(auth);
-
-                filterChain.doFilter(request, response);
+                holder = firebaseService.parseToken(authorizationHeader);
+                username = holder.getUid();
             } catch (FirebaseTokenInvalidException e) {
                 throw new SecurityException(e);
             }
         }
+
+        if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            Authentication auth = new FirebaseAuthenticationToken(username, holder);
+            SecurityContextHolder.getContext().setAuthentication(auth);
+        }
+
+        filterChain.doFilter(request, response);
     }
 }

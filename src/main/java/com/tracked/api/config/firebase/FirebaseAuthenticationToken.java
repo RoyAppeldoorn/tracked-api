@@ -7,7 +7,6 @@ import java.util.Collection;
 
 public class FirebaseAuthenticationToken extends AbstractAuthenticationToken {
 
-    private static final long serialVersionUID = -1869548136546750302L;
     private final Object principal;
     private Object credentials;
 
