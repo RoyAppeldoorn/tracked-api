@@ -1,38 +1,29 @@
 package com.tracked.api.service.impl;
 
-import com.tracked.api.model.Role;
-import com.tracked.api.model.User;
-import com.tracked.api.repository.RoleRepository;
 import com.tracked.api.repository.UserRepository;
 import com.tracked.api.service.UserService;
-import com.tracked.api.service.shared.RegisterUserInit;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import javax.transaction.Transactional;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Service(value = UserServiceImpl.NAME)
-@Log4j2
 public class UserServiceImpl implements UserService {
 
-    public final static String NAME = "UserService";
+    public static final String NAME = "UserService";
+    private final UserRepository userRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-    @Autowired
-    private RoleRepository roleRepository;
-
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDetails userDetails = userRepository.findByUsername(username);
+    @Override
+    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+        UserDetails userDetails = userRepository.findById(id);
         if (userDetails == null)
             return null;
 
@@ -41,17 +32,6 @@ public class UserServiceImpl implements UserService {
             grantedAuthorities.add(new SimpleGrantedAuthority(role.getAuthority()));
         }
 
-        return new org.springframework.security.core.userdetails.User(userDetails.getUsername(),
-                userDetails.getPassword(), userDetails.getAuthorities());
+        return userDetails;
     }
-
-    private Role getRole(String authority) {
-        Role adminRole = roleRepository.findByAuthority(authority);
-        if (adminRole == null) {
-            return new Role(authority);
-        } else {
-            return adminRole;
-        }
-    }
-
 }
