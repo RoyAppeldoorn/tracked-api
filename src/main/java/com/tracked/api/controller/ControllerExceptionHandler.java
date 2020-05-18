@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -59,14 +60,11 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     }
     //endregion
 
-    //region Fall-back handler
-    @ExceptionHandler({ Exception.class })
-    public ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {
-        ApiError apiError = new ApiError(
-                HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), "error occurred");
+    @ExceptionHandler({ AccessDeniedException.class })
+    public ResponseEntity<Object> handleAccessDeniedException(
+            Exception ex, WebRequest request) {
         return new ResponseEntity<Object>(
-                apiError, new HttpHeaders(), apiError.getStatus());
+                "Access denied message here", new HttpHeaders(), HttpStatus.FORBIDDEN);
     }
-    //endregion
 }
 
