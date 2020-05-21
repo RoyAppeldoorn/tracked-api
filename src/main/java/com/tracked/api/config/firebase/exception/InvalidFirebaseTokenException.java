@@ -4,6 +4,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 
 public class InvalidFirebaseTokenException extends BadCredentialsException {
     public InvalidFirebaseTokenException() {
-        super("");
+        super("Invalid firebase token");
     }
 }

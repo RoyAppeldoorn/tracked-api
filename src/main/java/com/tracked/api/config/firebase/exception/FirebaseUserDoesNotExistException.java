@@ -4,6 +4,6 @@ import org.springframework.security.authentication.AuthenticationCredentialsNotF
 
 public class FirebaseUserDoesNotExistException extends AuthenticationCredentialsNotFoundException {
     public FirebaseUserDoesNotExistException() {
-        super("User Not Found");
+        super("Firebase user not found");
     }
 }
