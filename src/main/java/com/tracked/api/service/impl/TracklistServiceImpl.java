@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 @Service
-public class TracklistServiceImpl implements TracklistService {
+public class TracklistServiceImpl {
 
     private final TracklistRepository tracklistRepository;
 
