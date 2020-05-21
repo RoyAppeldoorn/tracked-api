@@ -1,20 +1,23 @@
 package com.tracked.api.service.shared;
 
+import com.google.api.core.ApiFuture;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
-import com.tracked.api.config.firebase.FirebaseTokenHolder;
-import com.tracked.api.service.exception.FirebaseTokenInvalidException;
+import com.tracked.api.config.firebase.exception.InvalidFirebaseTokenException;
+import com.tracked.api.config.firebase.model.FirebaseUserDetails;
+import com.tracked.api.service.FirebaseService;
+import org.springframework.stereotype.Service;
 
-public class FirebaseParser {
-    public FirebaseTokenHolder parseToken(String idToken) {
-        if (idToken.isBlank()) {
-            throw new IllegalArgumentException("FirebaseTokenBlank");
-        }
+@Service
+public class FirebaseParser implements FirebaseService {
+    public FirebaseUserDetails parseToken(String firebaseToken) {
         try {
-            FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(idToken);
-            return new FirebaseTokenHolder(decodedToken);
+            ApiFuture<FirebaseToken> task = FirebaseAuth.getInstance().verifyIdTokenAsync(firebaseToken);
+            FirebaseToken token = task.get();
+
+            return new FirebaseUserDetails(token);
         } catch (Exception e) {
-            throw new FirebaseTokenInvalidException(e.getMessage());
+            throw new InvalidFirebaseTokenException();
         }
     }
 }
