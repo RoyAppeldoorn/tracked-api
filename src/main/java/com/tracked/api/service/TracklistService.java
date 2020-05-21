@@ -1,11 +1,10 @@
 package com.tracked.api.service;
 
 import com.tracked.api.model.Tracklist;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface TracklistService {
-
-    void create(Tracklist tracklist);
-
-    Tracklist get(String uuid);
+@Repository
+public interface TracklistService extends JpaRepository<Tracklist, String> {
 
 }
