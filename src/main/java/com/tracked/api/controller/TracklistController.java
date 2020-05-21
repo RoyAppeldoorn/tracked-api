@@ -19,12 +19,12 @@ public class TracklistController {
         this.tracklistServiceImpl = tracklistServiceImpl;
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping("/{id}")
     public Tracklist getTracklist(@Valid @PathVariable String id) {
         return tracklistServiceImpl.get(id);
     }
 
-    @PostMapping(value = "/create")
+    @PostMapping("/create")
     public void createTracklist(@Valid @RequestBody Tracklist tracklist) {
         tracklistServiceImpl.create(tracklist);
     }
