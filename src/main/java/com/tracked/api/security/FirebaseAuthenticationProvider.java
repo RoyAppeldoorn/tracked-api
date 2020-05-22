@@ -1,7 +1,7 @@
-package com.tracked.api.config.firebase;
+package com.tracked.api.security;
 
-import com.tracked.api.config.firebase.exception.FirebaseUserDoesNotExistException;
-import com.tracked.api.service.impl.UserServiceImpl;
+import com.tracked.api.security.model.FirebaseAuthenticationToken;
+import com.tracked.api.security.service.CustomUserDetailsService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 public class FirebaseAuthenticationProvider implements AuthenticationProvider {
 
     @Autowired
-    @Qualifier(value = UserServiceImpl.NAME)
+    @Qualifier(value = CustomUserDetailsService.NAME)
     private UserDetailsService userDetailsService;
 
     @Override

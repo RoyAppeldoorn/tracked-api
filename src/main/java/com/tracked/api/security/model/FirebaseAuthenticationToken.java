@@ -1,4 +1,4 @@
-package com.tracked.api.config.firebase;
+package com.tracked.api.security.model;
 
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;

@@ -1,13 +1,12 @@
 package com.tracked.api.config;
 
-import com.tracked.api.config.firebase.FirebaseAuthenticationEntryPoint;
-import com.tracked.api.config.firebase.FirebaseAuthenticationProvider;
-import com.tracked.api.config.firebase.FirebaseAuthenticationTokenFilter;
-import com.tracked.api.service.impl.UserServiceImpl;
+import com.tracked.api.security.FirebaseAuthenticationEntryPoint;
+import com.tracked.api.security.FirebaseAuthenticationProvider;
+import com.tracked.api.security.FirebaseAuthenticationTokenFilter;
+import com.tracked.api.security.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -34,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
     }
 
     @Autowired
-    @Qualifier(value = UserServiceImpl.NAME)
+    @Qualifier(value = CustomUserDetailsService.NAME)
     private UserDetailsService userService;
 
     @Override

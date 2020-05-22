@@ -1,4 +1,4 @@
-package com.tracked.api.controller;
+package com.tracked.api.controller.exception;
 
 import com.tracked.api.utils.ApiError;
 import lombok.extern.log4j.Log4j2;

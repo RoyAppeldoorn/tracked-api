@@ -1,10 +1,29 @@
 package com.tracked.api.service;
 
 import com.tracked.api.model.Tracklist;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import com.tracked.api.repository.TracklistRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
-@Repository
-public interface TracklistService extends JpaRepository<Tracklist, String> {
+@Service
+public class TracklistService {
 
+    private final TracklistRepository tracklistRepository;
+
+    @Autowired
+    public TracklistService(TracklistRepository tracklistRepository) {
+        this.tracklistRepository = tracklistRepository;
+    }
+
+    public void create(Tracklist tracklist) {
+        tracklistRepository.save(tracklist);
+    }
+
+    public Tracklist get(String id) {
+        return tracklistRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Tracklist not found"));
+    }
 }

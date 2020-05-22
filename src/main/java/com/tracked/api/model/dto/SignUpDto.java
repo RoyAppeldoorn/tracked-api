@@ -1,4 +1,4 @@
-package com.tracked.api.dto;
+package com.tracked.api.model.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

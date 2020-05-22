@@ -1,4 +1,4 @@
-package com.tracked.api.config.firebase;
+package com.tracked.api.config;
 
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;

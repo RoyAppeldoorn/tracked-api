@@ -1,4 +1,4 @@
-package com.tracked.api.config.firebase.exception;
+package com.tracked.api.security.exception;
 
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 

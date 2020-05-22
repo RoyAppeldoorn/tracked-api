@@ -1,7 +1,7 @@
 package com.tracked.api.controller.auth;
 
-import com.tracked.api.dto.SignUpDto;
-import com.tracked.api.service.impl.AuthServiceImpl;
+import com.tracked.api.model.dto.SignUpDto;
+import com.tracked.api.service.AuthService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,10 +16,10 @@ import javax.validation.Valid;
 @Log4j2
 public class SignUpController {
 
-    private final AuthServiceImpl authService;
+    private final AuthService authService;
 
     @Autowired
-    public SignUpController(AuthServiceImpl authService) {
+    public SignUpController(AuthService authService) {
         this.authService = authService;
     }
 

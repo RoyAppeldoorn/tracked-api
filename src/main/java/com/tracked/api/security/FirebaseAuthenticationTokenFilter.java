@@ -1,11 +1,11 @@
-package com.tracked.api.config.firebase;
+package com.tracked.api.security;
 
-import com.tracked.api.config.firebase.exception.InvalidFirebaseTokenException;
+import com.tracked.api.security.model.FirebaseAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import com.google.api.core.ApiFuture;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
-import com.tracked.api.config.firebase.model.FirebaseUserDetails;
+import com.tracked.api.security.model.FirebaseUserDetails;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 

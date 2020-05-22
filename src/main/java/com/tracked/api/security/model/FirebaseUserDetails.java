@@ -1,4 +1,4 @@
-package com.tracked.api.config.firebase.model;
+package com.tracked.api.security.model;
 
 import com.google.firebase.auth.FirebaseToken;
 
