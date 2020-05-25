@@ -1,5 +1,6 @@
 package com.tracked.api.model;
 
+import com.tracked.api.model.projection.IRegister;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class User implements UserDetails {
+public class User implements UserDetails, IRegister {
 
     @Id
     @NotEmpty
@@ -26,7 +27,7 @@ public class User implements UserDetails {
     //TODO add unique index
     private String email;
 
-    private String username;
+    private String nickname;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Role> authorities;

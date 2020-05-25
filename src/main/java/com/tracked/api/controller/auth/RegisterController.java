@@ -1,6 +1,6 @@
 package com.tracked.api.controller.auth;
 
-import com.tracked.api.model.dto.SignUpDto;
+import com.tracked.api.model.projection.IRegister;
 import com.tracked.api.service.AuthService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,23 +14,23 @@ import javax.validation.Valid;
 @RequestMapping("/auth")
 @CrossOrigin
 @Log4j2
-public class SignUpController {
+public class RegisterController {
 
     private final AuthService authService;
 
     @Autowired
-    public SignUpController(AuthService authService) {
+    public RegisterController(AuthService authService) {
         this.authService = authService;
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity signUp(@RequestHeader(value="X-Firebase-Auth", required = false) String firebaseToken, @Valid @RequestBody SignUpDto signUpModel) {
+    public ResponseEntity registerUser(@RequestHeader(value="X-Firebase-Auth", required = false) String firebaseToken, @Valid @RequestBody IRegister registerModel) {
         log.info(firebaseToken);
         if(firebaseToken == null) {
             return new ResponseEntity<>("No firebase token available in header", HttpStatus.UNAUTHORIZED);
         }
 
-        return authService.signUpUser(firebaseToken, signUpModel);
+        return authService.registerUser(firebaseToken, registerModel);
     }
 
     @ExceptionHandler

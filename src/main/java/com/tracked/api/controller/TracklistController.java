@@ -1,6 +1,7 @@
 package com.tracked.api.controller;
 
 import com.tracked.api.model.Tracklist;
+import com.tracked.api.model.projection.ITracklist;
 import com.tracked.api.service.TracklistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ public class TracklistController {
     }
 
     @GetMapping("/{id}")
-    public Tracklist getTracklist(@Valid @PathVariable String id) {
+    public ITracklist getTracklist(@Valid @PathVariable String id) {
         return tracklistService.get(id);
     }
 

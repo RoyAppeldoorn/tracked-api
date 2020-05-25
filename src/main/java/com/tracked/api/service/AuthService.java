@@ -1,7 +1,7 @@
 package com.tracked.api.service;
 
 import com.tracked.api.security.model.FirebaseUserDetails;
-import com.tracked.api.model.dto.SignUpDto;
+import com.tracked.api.model.projection.IRegister;
 import com.tracked.api.model.User;
 import com.tracked.api.repository.RoleRepository;
 import com.tracked.api.repository.UserRepository;
@@ -12,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
+import java.util.Collections;
 
 @Service
 @Log4j2
@@ -31,7 +31,7 @@ public class AuthService {
         this.firebaseService = firebaseService;
     }
 
-    public ResponseEntity signUpUser(String firebaseToken, SignUpDto signUpModel) {
+    public ResponseEntity registerUser(String firebaseToken, IRegister registerModel) {
         try {
             FirebaseUserDetails tokenHolder = firebaseService.parseToken(firebaseToken);
             String tokenHolderEmail = tokenHolder.getEmail();
@@ -42,8 +42,8 @@ public class AuthService {
             User user = new User();
             user.setId(tokenHolder.getUid());
             user.setEmail(tokenHolder.getEmail());
-            user.setUsername(signUpModel.getNickname());
-            user.setAuthorities(Arrays.asList(roleRepository.findByAuthority("ROLE_USER")));
+            user.setNickname(registerModel.getNickname());
+            user.setAuthorities(Collections.singletonList(roleRepository.findByAuthority("ROLE_USER")));
             userRepository.save(user);
             return new ResponseEntity<>(HttpStatus.OK);
         }

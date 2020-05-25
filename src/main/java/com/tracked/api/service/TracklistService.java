@@ -1,6 +1,7 @@
 package com.tracked.api.service;
 
 import com.tracked.api.model.Tracklist;
+import com.tracked.api.model.projection.ITracklist;
 import com.tracked.api.repository.TracklistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,9 +22,9 @@ public class TracklistService {
         tracklistRepository.save(tracklist);
     }
 
-    public Tracklist get(String id) {
-        return tracklistRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Tracklist not found"));
+    public ITracklist get(String id) {
+        return tracklistRepository.findById(id, ITracklist.class)
+            .orElseThrow(() -> new ResponseStatusException(
+                    HttpStatus.NOT_FOUND, "Tracklist not found"));
     }
 }
