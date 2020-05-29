@@ -8,13 +8,13 @@ VOLUME /tmp
 EXPOSE 8081
 
 # The application's jar file
-ARG JAR_FILE=target/api-1.0.jar
+ARG JAR_FILE=target/api-0.0.1-SNAPSHOT.jar
 
 RUN mkdir /api
 WORKDIR /api
 
 # Add the application's jar to the container
-ADD ${JAR_FILE} /api/api-1.0.jar
+ADD ${JAR_FILE} /api/api-0.0.1-SNAPSHOT.jar
 
 # Run the jar file
-ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom","-jar","/api/api-1.0.jar"]
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom","-jar","/api/api-0.0.1-SNAPSHOT.jar"]
