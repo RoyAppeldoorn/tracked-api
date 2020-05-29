@@ -17,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class User implements UserDetails, IRegister {
+public class User implements UserDetails {
 
     @Id
     @NotEmpty
@@ -31,6 +31,12 @@ public class User implements UserDetails, IRegister {
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Role> authorities;
+
+    @OneToMany
+            (mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private List<Tracklist> tracklists;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

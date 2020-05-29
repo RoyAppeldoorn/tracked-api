@@ -25,7 +25,6 @@ public class RegisterController {
 
     @PostMapping(value = "/register")
     public ResponseEntity registerUser(@RequestHeader(value="X-Firebase-Auth", required = false) String firebaseToken, @Valid @RequestBody IRegister registerModel) {
-        log.info(firebaseToken);
         if(firebaseToken == null) {
             return new ResponseEntity<>("No firebase token available in header", HttpStatus.UNAUTHORIZED);
         }

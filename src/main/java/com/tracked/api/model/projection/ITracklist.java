@@ -6,6 +6,6 @@ public interface ITracklist {
 
     String getTitle();
 
-    String getEmbed_url();
+    String getUrl();
 
 }

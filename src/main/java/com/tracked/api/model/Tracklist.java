@@ -11,8 +11,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class Tracklist {
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -25,9 +24,12 @@ public class Tracklist {
     private String title;
 
     @NotBlank
-    @JsonProperty("embed_url")
-    private String embed_url;
+    @JsonProperty("url")
+    private String url;
 
     @OneToMany(mappedBy = "tracklist")
     private List<TracklistSong> songs;
+
+    @ManyToOne
+    private User user;
 }
