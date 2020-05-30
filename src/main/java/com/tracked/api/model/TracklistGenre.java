@@ -13,7 +13,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Getter
 @Setter
-public class TracklistSong {
+public class TracklistGenre {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
@@ -24,10 +24,6 @@ public class TracklistSong {
     private Tracklist tracklist;
 
     @ManyToOne
-    @JoinColumn(name = "song_id")
-    private Song song;
-
-    private String from;
-
-    private String till;
+    @JoinColumn(name = "genre_id")
+    private Genre genre;
 }

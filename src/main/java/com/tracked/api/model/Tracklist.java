@@ -30,6 +30,9 @@ public class Tracklist {
     @OneToMany(mappedBy = "tracklist")
     private List<TracklistSong> songs;
 
+    @OneToMany(mappedBy = "tracklist")
+    private List<TracklistGenre> genres;
+
     @ManyToOne
     private User user;
 }
