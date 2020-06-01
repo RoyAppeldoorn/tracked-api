@@ -1,6 +1,6 @@
 package com.tracked.api.controller;
 
-import com.tracked.api.model.projection.IGenre;
+import com.tracked.api.model.Genre;
 import com.tracked.api.service.GenreService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +19,7 @@ public class GenreController {
     }
 
     @GetMapping("")
-    public List<IGenre> getAllGenres() {
+    public List<Genre> getAllGenres() {
         return genreService.getAllGenres();
     }
 }

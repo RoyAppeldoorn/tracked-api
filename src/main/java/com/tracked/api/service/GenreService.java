@@ -1,6 +1,6 @@
 package com.tracked.api.service;
 
-import com.tracked.api.model.projection.IGenre;
+import com.tracked.api.model.Genre;
 import com.tracked.api.repository.GenreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class GenreService {
         this.genreRepository = genreRepository;
     }
 
-    public List<IGenre> getAllGenres() {
-        return genreRepository.findAllGenresBy();
+    public List<Genre> getAllGenres() {
+        return genreRepository.findAllBy();
     }
 }
