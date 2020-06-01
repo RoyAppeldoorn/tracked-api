@@ -8,7 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TracklistRepository extends JpaRepository<Tracklist, String> {
+
     <T> List<T> findAllBy(Class<T> clazz);
 
     <T> Optional<T> findById(String id, Class<T> clazz);
+
 }
