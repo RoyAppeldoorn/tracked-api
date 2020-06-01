@@ -1,7 +1,9 @@
 package com.tracked.api.service;
 
+import com.tracked.api.model.Genre;
 import com.tracked.api.model.Tracklist;
 import com.tracked.api.model.projection.ITracklist;
+import com.tracked.api.repository.GenreRepository;
 import com.tracked.api.repository.TracklistRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,13 +15,16 @@ public class TracklistService {
 
     private final TracklistRepository tracklistRepository;
 
+    private final GenreRepository genreRepository;
+
     @Autowired
-    public TracklistService(TracklistRepository tracklistRepository) {
+    public TracklistService(TracklistRepository tracklistRepository, GenreRepository genreRepository) {
+        this.genreRepository = genreRepository;
         this.tracklistRepository = tracklistRepository;
     }
 
-    public void create(Tracklist tracklist) {
-        tracklistRepository.save(tracklist);
+    public Tracklist create(Tracklist tracklist) {
+        return tracklistRepository.save(tracklist);
     }
 
     public ITracklist get(String id) {
