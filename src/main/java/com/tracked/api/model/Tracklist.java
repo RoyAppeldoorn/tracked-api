@@ -1,5 +1,7 @@
 package com.tracked.api.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -7,11 +9,13 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class Tracklist {
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -27,11 +31,17 @@ public class Tracklist {
     @JsonProperty("url")
     private String url;
 
-    @OneToMany(mappedBy = "tracklist")
-    private List<TracklistSong> songs;
+    private boolean draft = true;
 
     @OneToMany(mappedBy = "tracklist")
-    private List<TracklistGenre> genres;
+    private Set<TracklistSong> songs;
+
+    @ManyToMany
+    @JoinTable(
+            name = "tracklist_genre",
+            joinColumns = @JoinColumn(name = "tracklist_id"),
+            inverseJoinColumns = @JoinColumn(name = "genre_id"))
+    private Set<Genre> genres;
 
     @ManyToOne
     private User user;

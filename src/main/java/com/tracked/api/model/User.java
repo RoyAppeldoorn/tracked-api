@@ -1,6 +1,5 @@
 package com.tracked.api.model;
 
-import com.tracked.api.model.projection.IRegister;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +11,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -32,11 +32,11 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Role> authorities;
 
-    @OneToMany
-            (mappedBy = "user",
+    @OneToMany(mappedBy = "user",
             cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
             orphanRemoval = true)
-    private List<Tracklist> tracklists;
+    private Set<Tracklist> tracklists;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

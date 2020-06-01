@@ -9,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @NoArgsConstructor
@@ -25,5 +26,5 @@ public class Song {
     private String title;
 
     @OneToMany(mappedBy = "song")
-    private List<TracklistSong> tracklists;
+    private Set<TracklistSong> tracklists;
 }

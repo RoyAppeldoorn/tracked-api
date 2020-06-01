@@ -1,17 +1,14 @@
 package com.tracked.api.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.List;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity(name = "GENRE")
 @NoArgsConstructor
@@ -22,8 +19,9 @@ public class Genre {
     @Id
     private String id;
 
-    private String genre;
+    private String name;
 
-    @OneToMany(mappedBy = "genre")
-    private List<TracklistGenre> genres;
+    @ManyToMany(mappedBy = "genres")
+    @JsonBackReference
+    private Set<Tracklist> tracklists;
 }
