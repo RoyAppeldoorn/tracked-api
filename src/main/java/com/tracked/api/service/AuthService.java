@@ -1,7 +1,6 @@
 package com.tracked.api.service;
 
 import com.tracked.api.security.model.FirebaseUserDetails;
-import com.tracked.api.model.projection.IRegister;
 import com.tracked.api.model.User;
 import com.tracked.api.repository.RoleRepository;
 import com.tracked.api.repository.UserRepository;
@@ -31,7 +30,7 @@ public class AuthService {
         this.firebaseService = firebaseService;
     }
 
-    public ResponseEntity registerUser(String firebaseToken, IRegister registerModel) {
+    public ResponseEntity registerUser(String firebaseToken, User userDetails) {
         try {
             FirebaseUserDetails tokenHolder = firebaseService.parseToken(firebaseToken);
             String tokenHolderEmail = tokenHolder.getEmail();
@@ -42,7 +41,7 @@ public class AuthService {
             User user = new User();
             user.setId(tokenHolder.getUid());
             user.setEmail(tokenHolder.getEmail());
-            user.setNickname(registerModel.getNickname());
+            user.setNickname(userDetails.getNickname());
             user.setAuthorities(Collections.singletonList(roleRepository.findByAuthority("ROLE_USER")));
             userRepository.save(user);
             return new ResponseEntity<>(HttpStatus.OK);
@@ -50,6 +49,5 @@ public class AuthService {
         catch(Exception ex) {
             return new ResponseEntity<>("Invalid firebase token", HttpStatus.UNAUTHORIZED);
         }
-
     }
 }

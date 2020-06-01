@@ -1,6 +1,6 @@
 package com.tracked.api.controller.auth;
 
-import com.tracked.api.model.projection.IRegister;
+import com.tracked.api.model.User;
 import com.tracked.api.service.AuthService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +24,12 @@ public class RegisterController {
     }
 
     @PostMapping(value = "/register")
-    public ResponseEntity registerUser(@RequestHeader(value="X-Firebase-Auth", required = false) String firebaseToken, @Valid @RequestBody IRegister registerModel) {
+    public ResponseEntity registerUser(@RequestHeader(value="X-Firebase-Auth", required = false) String firebaseToken, @RequestBody User userDetails) {
         if(firebaseToken == null) {
             return new ResponseEntity<>("No firebase token available in header", HttpStatus.UNAUTHORIZED);
         }
 
-        return authService.registerUser(firebaseToken, registerModel);
+        return authService.registerUser(firebaseToken, userDetails);
     }
 
     @ExceptionHandler
