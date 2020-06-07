@@ -1,6 +1,5 @@
 package com.tracked.api.service;
 
-import com.tracked.api.model.Genre;
 import com.tracked.api.model.Tracklist;
 import com.tracked.api.model.projection.ITracklist;
 import com.tracked.api.repository.GenreRepository;
@@ -23,8 +22,9 @@ public class TracklistService {
         this.tracklistRepository = tracklistRepository;
     }
 
-    public Tracklist create(Tracklist tracklist) {
-        return tracklistRepository.save(tracklist);
+    public String create(Tracklist tracklist) {
+        Tracklist newTracklist = tracklistRepository.saveAndFlush(tracklist);
+        return newTracklist.getId();
     }
 
     public ITracklist get(String id) {

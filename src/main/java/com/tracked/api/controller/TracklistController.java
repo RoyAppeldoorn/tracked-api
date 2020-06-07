@@ -3,10 +3,16 @@ package com.tracked.api.controller;
 import com.tracked.api.model.Tracklist;
 import com.tracked.api.model.User;
 import com.tracked.api.model.projection.ITracklist;
+import com.tracked.api.security.service.CustomUserDetailsService;
 import com.tracked.api.service.TracklistService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -31,16 +37,15 @@ public class TracklistController {
     }
 
     @PostMapping("/create")
-    public Tracklist createTracklist(@Valid @RequestBody Tracklist tracklist, Principal principal) {
-        if(principal == null) {
-            throw new ResponseStatusException(
-                    HttpStatus.FORBIDDEN, "Not authenticated, create an account first");
+    @Secured("ROLE_USER")
+    public ResponseEntity<String> createTracklist(@Valid @RequestBody Tracklist tracklist, @AuthenticationPrincipal User user) {
+        if(user == null) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
 
-        User firebaseUser = (User) principal;
-        tracklist.setUser(firebaseUser);
-
-        return tracklistService.create(tracklist);
+        tracklist.setUser(user);
+        String idFromNewTracklist = tracklistService.create(tracklist);
+        return new ResponseEntity<>(idFromNewTracklist, HttpStatus.OK);
     }
 
 }
